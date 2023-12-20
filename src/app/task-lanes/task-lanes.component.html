@@ -1,0 +1,69 @@
+<mat-toolbar class="navbar">
+  <mat-toolbar-row>
+    <h2 class="title">TodoList</h2>
+    <span class="icon"></span>
+    <mat-icon class="account-icon">account_circle</mat-icon>
+    <mat-icon class="settings-icon">settings</mat-icon>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="d-flex justify-content-center ">
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <div class="todo-container p-3">
+        <h4>To do</h4>
+        <div
+          cdkDropList
+          #todoList="cdkDropList"
+          [cdkDropListData]="todo"
+          [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
+          class="todo-list"
+          (cdkDropListDropped)="drop($event)">
+          <div *ngFor="let item of todo" class="item-box" cdkDrag>
+            {{ item.taskTitle  }}
+            <app-delete-btn [taskLane]="'todo'" [taskTitle]= item.taskTitle></app-delete-btn>
+          </div>
+          <app-add-tasks-btn [taskLane]="'todo'"  class="item-box" cdkDrag></app-add-tasks-btn>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="in-progress-container p-3">
+        <h4>In Progress</h4>
+        <div
+          cdkDropList
+          #inProgressList="cdkDropList"
+          [cdkDropListData]="inProgress"
+          [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
+          class="in-progress-list"
+          (cdkDropListDropped)="drop($event)">
+          <div *ngFor="let item of inProgress" class="item-box" cdkDrag>
+            {{ item.taskTitle }}
+            <app-delete-btn [taskLane]="'inProgress'" [taskTitle]= item.taskTitle></app-delete-btn>
+          </div>
+          <app-add-tasks-btn [taskLane]="'inProgress'" class="item-box" cdkDrag ></app-add-tasks-btn>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="done-container p-3">
+        <h4>Done</h4>
+        <div
+          cdkDropList
+          #doneList="cdkDropList"
+          [cdkDropListData]="done"
+          [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
+          class="done-list"
+          (cdkDropListDropped)="drop($event)">
+          <div *ngFor="let item of done" class="item-box" cdkDrag>
+            {{ item.taskTitle  }}
+            <app-delete-btn [taskLane]="'done'" [taskTitle]= item.taskTitle></app-delete-btn>
+          </div>
+          <app-add-tasks-btn [taskLane]="'done'" class="item-box" cdkDrag></app-add-tasks-btn>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
