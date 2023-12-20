@@ -19,6 +19,8 @@ import {MatInputModule} from '@angular/material/input';
 import { DeleteBtnComponent } from './delete-btn/delete-btn.component';
 import { ConfirmDeleteModal } from './delete-btn/delete-btn.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { TaskComponent } from './task/task.component';
+import { DisplayTaskComponent } from './display-task/display-task.component';
 
 
 
@@ -29,7 +31,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     AddTasksBtnComponent,
     AddTasksModal,
     DeleteBtnComponent,
-    ConfirmDeleteModal
+    ConfirmDeleteModal,
+    TaskComponent,
+    DisplayTaskComponent
   ],
   imports: [
     MatToolbarModule,

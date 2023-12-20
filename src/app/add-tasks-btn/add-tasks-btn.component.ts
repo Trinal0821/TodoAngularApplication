@@ -26,7 +26,6 @@ export class AddTasksBtnComponent {
 }
 
 @Component({
-  selector: 'app-add-tasks-module',
   templateUrl: './add-tasks-module.html',
 })
 export class AddTasksModal{

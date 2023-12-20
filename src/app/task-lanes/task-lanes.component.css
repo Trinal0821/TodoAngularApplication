@@ -13,13 +13,29 @@
 
 .navbar {
   background-color: #85a5af;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
-.icon {
-  padding: 0 14px;
-  flex: 1 1 auto;
+.toolbar-row {
+  justify-content: space-between;
+  color: white;
 }
+
+.login {
+  display: flex;
+  gap: 16px; 
+}
+
+
+/* 
+/* Add some margin to the icons 
+.account-icon,
+.settings-icon {
+  margin: 0 8px;
+  color: white;
+  transform: scale(1.3);
+} */
+
 
 .title {
   font-size: 30px; /* Adjust the font size as needed */

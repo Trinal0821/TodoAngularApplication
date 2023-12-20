@@ -1,11 +1,15 @@
 <mat-toolbar class="navbar">
-  <mat-toolbar-row>
+  <mat-toolbar-row class="toolbar-row">
     <h2 class="title">TodoList</h2>
-    <span class="icon"></span>
-    <mat-icon class="account-icon">account_circle</mat-icon>
-    <mat-icon class="settings-icon">settings</mat-icon>
+    <div class="login">
+    <span>Login</span>
+    <span>Sign up</span>
+  </div>
+    <!-- <mat-icon class="navbar-icons account-icon">account_circle</mat-icon> -->
   </mat-toolbar-row>
 </mat-toolbar>
+
+
 
 <div class="d-flex justify-content-center ">
   <div class="row">
@@ -19,7 +23,7 @@
           [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
           class="todo-list"
           (cdkDropListDropped)="drop($event)">
-          <div *ngFor="let item of todo" class="item-box" cdkDrag>
+          <div *ngFor="let item of todo" class="item-box" cdkDrag (click)="displayTaskDetail(item.taskTitle)">
             {{ item.taskTitle  }}
             <app-delete-btn [taskLane]="'todo'" [taskTitle]= item.taskTitle></app-delete-btn>
           </div>
@@ -38,7 +42,7 @@
           [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
           class="in-progress-list"
           (cdkDropListDropped)="drop($event)">
-          <div *ngFor="let item of inProgress" class="item-box" cdkDrag>
+          <div *ngFor="let item of inProgress" class="item-box" cdkDrag (click)="displayTaskDetail(item.taskTitle)">
             {{ item.taskTitle }}
             <app-delete-btn [taskLane]="'inProgress'" [taskTitle]= item.taskTitle></app-delete-btn>
           </div>
@@ -57,7 +61,7 @@
           [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
           class="done-list"
           (cdkDropListDropped)="drop($event)">
-          <div *ngFor="let item of done" class="item-box" cdkDrag>
+          <div *ngFor="let item of done" class="item-box" cdkDrag (click)="displayTaskDetail(item.taskTitle)">
             {{ item.taskTitle  }}
             <app-delete-btn [taskLane]="'done'" [taskTitle]= item.taskTitle></app-delete-btn>
           </div>

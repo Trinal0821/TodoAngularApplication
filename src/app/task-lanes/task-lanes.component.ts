@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { SendDataService } from '../send-data.service';
 import { Subscription } from 'rxjs';
 import { AddNewTaskModel } from '../models/add-new-task-model';
+import { DisplayTaskComponent } from '../display-task/display-task.component';
 
 @Component({
   selector: 'app-task-lanes',
@@ -12,7 +13,8 @@ import { AddNewTaskModel } from '../models/add-new-task-model';
 export class TaskLanesComponent implements OnInit, OnDestroy{
   private addBtnDataSubscription: Subscription | undefined;
   private deleteBtnDataSubscription: Subscription | undefined;
-            
+  @ViewChild(DisplayTaskComponent) displayTaskComponent!: DisplayTaskComponent;
+
 
   todo : AddNewTaskModel[]= [
     {taskTitle: 'Get to work', dueDate: new Date(2034, 22, 2), description: 'Get to work early', laneName: 'todo'},
@@ -128,6 +130,11 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
       itemRect.top >= containerRect.top &&
       itemRect.bottom <= containerRect.bottom
     );
+  }
+
+  displayTaskDetail(taskTitle : string) {
+    console.log(this.displayTaskComponent, 'here here');
+   this.displayTaskComponent.openDialog();
   }
 
 }
