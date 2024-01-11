@@ -9,8 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TaskLanesComponent } from './task-lanes/task-lanes.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { AddTasksBtnComponent } from './add-tasks-btn/add-tasks-btn.component';
-import { AddTasksModal } from './add-tasks-btn/add-tasks-btn.component';
+import { AddTasksBtnComponent, AddTasksModal  } from './add-tasks-btn/add-tasks-btn.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -19,8 +18,8 @@ import {MatInputModule} from '@angular/material/input';
 import { DeleteBtnComponent } from './delete-btn/delete-btn.component';
 import { ConfirmDeleteModal } from './delete-btn/delete-btn.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { TaskComponent } from './task/task.component';
-import { DisplayTaskComponent } from './display-task/display-task.component';
+import { DisplayComponent, DisplayTasksModal } from './display-task/display-task.component';
+import { LoginModal, SignupModal, LoginComponent, SignupComponent } from './account-setup/account-setup.component';
 
 
 
@@ -32,8 +31,12 @@ import { DisplayTaskComponent } from './display-task/display-task.component';
     AddTasksModal,
     DeleteBtnComponent,
     ConfirmDeleteModal,
-    TaskComponent,
-    DisplayTaskComponent
+    LoginComponent,
+    SignupComponent,
+   LoginModal,
+   SignupModal,
+    DisplayComponent,
+    DisplayTasksModal,
   ],
   imports: [
     MatToolbarModule,

@@ -3,4 +3,5 @@ export interface AddNewTaskModel {
     dueDate : Date;
     description: string;
     laneName: string;
+    operation: string;
 }

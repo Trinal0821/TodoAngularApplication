@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, Observable, take } from 'rxjs';
 import { AddNewTaskModel } from './models/add-new-task-model';
 import { DeleteTaskModel } from './models/delete-task-model';
+import { DisplayTasksModal } from './display-task/display-task.component';
 
 @Injectable({
   providedIn: 'root'

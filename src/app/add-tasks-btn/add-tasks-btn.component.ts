@@ -42,8 +42,10 @@ export class AddTasksModal{
   onSave() {
     if (this.form.valid) {
       let sendData : AddNewTaskModel = {taskTitle: this.form.get('taskTitle')?.value, 
-      dueDate: new Date(2034, 22, 2), description: this.form.get('description')?.value,
-      laneName: this.data}
+      dueDate: this.form.get('dueDate')?.value, description: this.form.get('description')?.value,
+      laneName: this.data, operation: 'insert'}
+
+      console.log(this.form.get('dueDate')?.value);
 
       this.sendDataService.setData(sendData);
     }

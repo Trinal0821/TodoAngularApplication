@@ -2,17 +2,17 @@
   <mat-toolbar-row class="toolbar-row">
     <h2 class="title">TodoList</h2>
     <div class="login">
-    <span>Login</span>
-    <span>Sign up</span>
+      <app-login-btn></app-login-btn>
+      <app-signup-btn></app-signup-btn>
   </div>
     <!-- <mat-icon class="navbar-icons account-icon">account_circle</mat-icon> -->
   </mat-toolbar-row>
 </mat-toolbar>
 
-
-
 <div class="d-flex justify-content-center ">
   <div class="row">
+    <app-display #display></app-display>
+
     <div class="col-md-4 mb-3">
       <div class="todo-container p-3">
         <h4>To do</h4>
@@ -23,11 +23,11 @@
           [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
           class="todo-list"
           (cdkDropListDropped)="drop($event)">
-          <div *ngFor="let item of todo" class="item-box" cdkDrag (click)="displayTaskDetail(item.taskTitle)">
+           <div *ngFor="let item of todo" class="item-box" cdkDrag (click)="displayTaskDetail(item)">
             {{ item.taskTitle  }}
             <app-delete-btn [taskLane]="'todo'" [taskTitle]= item.taskTitle></app-delete-btn>
           </div>
-          <app-add-tasks-btn [taskLane]="'todo'"  class="item-box" cdkDrag></app-add-tasks-btn>
+          <app-add-tasks-btn [taskLane]="'todo'"  class="item-box" ></app-add-tasks-btn>
         </div>
       </div>
     </div>
@@ -42,11 +42,11 @@
           [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
           class="in-progress-list"
           (cdkDropListDropped)="drop($event)">
-          <div *ngFor="let item of inProgress" class="item-box" cdkDrag (click)="displayTaskDetail(item.taskTitle)">
+          <div *ngFor="let item of inProgress" class="item-box" cdkDrag (click)="displayTaskDetail(item)">
             {{ item.taskTitle }}
             <app-delete-btn [taskLane]="'inProgress'" [taskTitle]= item.taskTitle></app-delete-btn>
           </div>
-          <app-add-tasks-btn [taskLane]="'inProgress'" class="item-box" cdkDrag ></app-add-tasks-btn>
+          <app-add-tasks-btn [taskLane]="'inProgress'" class="item-box" ></app-add-tasks-btn>
         </div>
       </div>
     </div>
@@ -61,11 +61,11 @@
           [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
           class="done-list"
           (cdkDropListDropped)="drop($event)">
-          <div *ngFor="let item of done" class="item-box" cdkDrag (click)="displayTaskDetail(item.taskTitle)">
+          <div *ngFor="let item of done" class="item-box" cdkDrag (click)="displayTaskDetail(item)">
             {{ item.taskTitle  }}
             <app-delete-btn [taskLane]="'done'" [taskTitle]= item.taskTitle></app-delete-btn>
           </div>
-          <app-add-tasks-btn [taskLane]="'done'" class="item-box" cdkDrag></app-add-tasks-btn>
+          <app-add-tasks-btn [taskLane]="'done'" class="item-box"></app-add-tasks-btn>
         </div>
       </div>
     </div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DisplayTaskComponent } from './display-task.component';
+import { DisplayComponent } from './display-task.component';
 
-describe('DisplayTaskComponent', () => {
-  let component: DisplayTaskComponent;
-  let fixture: ComponentFixture<DisplayTaskComponent>;
+describe('DisplayComponent', () => {
+  let component: DisplayComponent;
+  let fixture: ComponentFixture<DisplayComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DisplayTaskComponent]
+      declarations: [DisplayComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DisplayTaskComponent);
+    fixture = TestBed.createComponent(DisplayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

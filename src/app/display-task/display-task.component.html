@@ -1,6 +1,6 @@
-<h1 mat-dialog-title class="mat-dialog-title-large text-center">Add New Task</h1>
+<h1 mat-dialog-title class="mat-dialog-title-large text-center testing">Edit Task</h1>
 
-<!-- <form [formGroup]="form">
+ <form [formGroup]="form">
   <mat-dialog-content class="mat-typography container" style="max-width: 800px; margin: auto;">
     <div class="row">
       <div class="col-md-6">
@@ -12,7 +12,7 @@
       <div class="col-md-6">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Due Date</mat-label>
-          <input matInput [matDatepicker]="picker">
+          <input matInput [matDatepicker]="picker" formControlName="dueDate">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -21,7 +21,7 @@
     <div class="row">
       <div class="col-md-12">
         <mat-form-field appearance="outline" [style.width.px]=530>
-          <mat-label>Enter a description</mat-label>
+          <mat-label>Description</mat-label>
           <textarea matInput formControlName="description" placeholder="Enter a description" rows="5" style="width: 100%;"></textarea>
         </mat-form-field>
       </div>
@@ -32,4 +32,4 @@
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-button [mat-dialog-close]="true" cdkFocusInitial  style="background-color: #ccc" (click)="onSave()">Save</button>
   </mat-dialog-actions>
-</form> -->
+</form>

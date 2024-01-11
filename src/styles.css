@@ -4,8 +4,8 @@ body {
     background-color:#749aa5;
 }
 
-h2, h4, body {
+ h2, h4, body {
     color: white;
-}
+} 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

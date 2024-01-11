@@ -6,38 +6,43 @@ import { AddNewTaskModel } from '../models/add-new-task-model';
 
 
 @Component({
-  templateUrl: './display-task.component.html'
+  selector: 'app-display',
+  template: "",
 })
-export class DisplayTaskComponent {
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private sendData : SendDataService) {}
+export class DisplayComponent {
+  constructor(public dialog: MatDialog) {}
 
-
-  openDialog() {
-    this.dialog.open(DisplayTasksModal);
+  openDialog(model : AddNewTaskModel) {
+    this.dialog.open(DisplayTasksModal, {
+      data: model
+    });
   }
 }
 
+
+
 @Component({
-  templateUrl: './display-task.component.html'
+  templateUrl: './display-task.component.html',
 })
 export class DisplayTasksModal{
-  //form : FormGroup;
+  form : FormGroup;
 
-  constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: string) {
-    // this.form = this.fb.group({
-    //   taskTitle: ['', Validators.required],
-    //   dueDate: [''],
-    //   description: [''],
-    // });
+  constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data:  AddNewTaskModel) {
+     this.form = this.fb.group({
+       taskTitle: data.taskTitle,
+       dueDate: this.fb.control(data.dueDate),
+       description: data.description,
+     });
   }
 
-  // onSave() {
-  //   if (this.form.valid) {
-  //     let sendData : AddNewTaskModel = {taskTitle: this.form.get('taskTitle')?.value, 
-  //     dueDate: new Date(2034, 22, 2), description: this.form.get('description')?.value,
-  //     laneName: this.data}
+  onSave() {
+    if (this.form.valid) {
+      let sendData : AddNewTaskModel = {taskTitle: this.form.get('taskTitle')?.value, 
+      dueDate: new Date(2034, 22, 2), description: this.form.get('description')?.value,
+      laneName: this.data.laneName, operation: 'edit'
+    }
 
-  //     this.sendDataService.setData(sendData);
-  //   }
-  // }
+      this.sendDataService.setData(sendData);
+    }
+ }
 }
