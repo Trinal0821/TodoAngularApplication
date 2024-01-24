@@ -4,7 +4,7 @@
     <div class="login">
       <app-login-btn></app-login-btn>
       <app-signup-btn></app-signup-btn>
-  </div>
+    </div>
     <!-- <mat-icon class="navbar-icons account-icon">account_circle</mat-icon> -->
   </mat-toolbar-row>
 </mat-toolbar>
@@ -16,18 +16,21 @@
     <div class="col-md-4 mb-3">
       <div class="todo-container p-3">
         <h4>To do</h4>
-        <div
-          cdkDropList
-          #todoList="cdkDropList"
-          [cdkDropListData]="todo"
-          [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
-          class="todo-list"
+        <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+          [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]" class="todo-list"
           (cdkDropListDropped)="drop($event)">
-           <div *ngFor="let item of todo" class="item-box" cdkDrag (click)="displayTaskDetail(item)">
-            {{ item.taskTitle  }}
-            <app-delete-btn [taskLane]="'todo'" [taskTitle]= item.taskTitle></app-delete-btn>
+          <div *ngFor="let item of todo" class="item-box" cdkDrag (click)="displayTaskDetail(item)">
+            <div class="task-info">
+              {{ item.taskTitle }}
+              <app-delete-btn [taskLane]="'todo'" [taskTitle]=item.taskTitle></app-delete-btn>
+            </div>
+            <div class="chip-container">
+              <mat-chip class="chip">
+                {{ item.priority }}
+              </mat-chip>
+            </div>
           </div>
-          <app-add-tasks-btn [taskLane]="'todo'"  class="item-box" ></app-add-tasks-btn>
+          <app-add-tasks-btn [taskLane]="'todo'" class="item-box"></app-add-tasks-btn>
         </div>
       </div>
     </div>
@@ -35,18 +38,21 @@
     <div class="col-md-4 mb-3">
       <div class="in-progress-container p-3">
         <h4>In Progress</h4>
-        <div
-          cdkDropList
-          #inProgressList="cdkDropList"
-          [cdkDropListData]="inProgress"
-          [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
-          class="in-progress-list"
+        <div cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
+          [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]" class="in-progress-list"
           (cdkDropListDropped)="drop($event)">
-          <div *ngFor="let item of inProgress" class="item-box" cdkDrag (click)="displayTaskDetail(item)">
-            {{ item.taskTitle }}
-            <app-delete-btn [taskLane]="'inProgress'" [taskTitle]= item.taskTitle></app-delete-btn>
+          <div *ngFor="let item of inProgress" class="item-box" cdkDrag (click)="displayTaskDetail(item)">          
+            <div class="task-info">
+              {{ item.taskTitle }}
+              <app-delete-btn [taskLane]="'inProgress'" [taskTitle]=item.taskTitle></app-delete-btn>
+            </div>
+            <div class="chip-container">
+              <mat-chip class="chip">
+                {{ item.priority }}
+              </mat-chip>
+            </div>
           </div>
-          <app-add-tasks-btn [taskLane]="'inProgress'" class="item-box" ></app-add-tasks-btn>
+          <app-add-tasks-btn [taskLane]="'inProgress'" class="item-box"></app-add-tasks-btn>
         </div>
       </div>
     </div>
@@ -54,16 +60,19 @@
     <div class="col-md-4 mb-3">
       <div class="done-container p-3">
         <h4>Done</h4>
-        <div
-          cdkDropList
-          #doneList="cdkDropList"
-          [cdkDropListData]="done"
-          [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
-          class="done-list"
+        <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+          [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]" class="done-list"
           (cdkDropListDropped)="drop($event)">
           <div *ngFor="let item of done" class="item-box" cdkDrag (click)="displayTaskDetail(item)">
-            {{ item.taskTitle  }}
-            <app-delete-btn [taskLane]="'done'" [taskTitle]= item.taskTitle></app-delete-btn>
+            <div class="task-info">
+              {{ item.taskTitle }}
+              <app-delete-btn [taskLane]="'done'" [taskTitle]=item.taskTitle></app-delete-btn>
+            </div>
+            <div class="chip-container">
+              <mat-chip class="chip">
+                {{ item.priority }}
+              </mat-chip>
+            </div>
           </div>
           <app-add-tasks-btn [taskLane]="'done'" class="item-box"></app-add-tasks-btn>
         </div>

@@ -17,24 +17,24 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
 
 
   todo : AddNewTaskModel[]= [
-    {taskTitle: 'Get to work', dueDate: new Date(2034, 2, 2), description: 'Get to work early', laneName: 'todo', operation: ''},
-    {taskTitle: 'Pick up groceries', dueDate: new Date(2034, 2, 2), description: 'and pick up dinner', laneName: 'todo', operation: ''},
-    {taskTitle: 'Go home', dueDate: new Date(2034, 2, 2), description: '', laneName: 'todo', operation: ''},
-    {taskTitle: 'Sleep', dueDate: new Date(2034, 2, 2), description: '', laneName: 'todo', operation: ''},
+    {taskTitle: 'Get to work', dueDate: new Date(2034, 2, 2), description: 'Get to work early', laneName: 'todo', operation: '', priority: 'High'},
+    {taskTitle: 'Pick up groceries', dueDate: new Date(2034, 2, 2), description: 'and pick up dinner', laneName: 'todo', operation: '', priority: 'High'},
+    {taskTitle: 'Go home', dueDate: new Date(2034, 2, 2), description: '', laneName: 'todo', operation: '', priority: 'High'},
+    {taskTitle: 'Sleep', dueDate: new Date(2034, 2, 2), description: '', laneName: 'todo', operation: '', priority: 'High'},
   ]
 
   inProgress : AddNewTaskModel[]= [
-    {taskTitle: 'somethin1', dueDate: new Date(2034, 2, 2), description: '', laneName: 'inProgress', operation: ''},
-    {taskTitle: 'something2', dueDate: new Date(2034, 2, 2), description: '', laneName: 'inProgress', operation: ''},
-    {taskTitle: 'something3', dueDate: new Date(2034, 2, 2), description: '', laneName: 'inProgress', operation: ''},
+    {taskTitle: 'somethin1', dueDate: new Date(2034, 2, 2), description: '', laneName: 'inProgress', operation: '', priority: 'Medium'},
+    {taskTitle: 'something2', dueDate: new Date(2034, 2, 2), description: '', laneName: 'inProgress', operation: '', priority: 'Medium'},
+    {taskTitle: 'something3', dueDate: new Date(2034, 2, 2), description: '', laneName: 'inProgress', operation: '', priority: 'Medium'},
   ]
 
   done : AddNewTaskModel[]= [
-    {taskTitle: 'Get up', dueDate: new Date(2054, 2, 2), description: '123', laneName: 'done', operation: ''},
-    {taskTitle: 'Brush teeth', dueDate: new Date(2064, 2, 2), description: '4561', laneName: 'done', operation: ''},
-    {taskTitle: 'Take a shower', dueDate: new Date(2014, 2, 2), description: '', laneName: 'done', operation: ''},
-    {taskTitle: 'Check e-mail', dueDate: new Date(2013, 0, 2), description: '', laneName: 'done', operation: ''},
-    {taskTitle: 'Walk dog', dueDate: new Date(2024, 1, 1), description: 'Lorem Ipsum', laneName: 'done', operation: ''},
+    {taskTitle: 'Get up', dueDate: new Date(2054, 2, 2), description: '123', laneName: 'done', operation: '', priority: 'Low'},
+    {taskTitle: 'Brush teeth', dueDate: new Date(2064, 2, 2), description: '4561', laneName: 'done', operation: '', priority: 'Low'},
+    {taskTitle: 'Take a shower', dueDate: new Date(2014, 2, 2), description: '', laneName: 'done', operation: '', priority: 'Low'},
+    {taskTitle: 'Check e-mail', dueDate: new Date(2013, 0, 2), description: '', laneName: 'done', operation: '', priority: 'Low'},
+    {taskTitle: 'Walk dog', dueDate: new Date(2024, 1, 1), description: 'Lorem Ipsum', laneName: 'done', operation: '', priority: 'Low'},
   ]
 
   //@ViewChild(AddTaskDirective) lane !: String;
@@ -49,9 +49,9 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
             if(updatedData.operation === 'insert') {
               this.todo.push(updatedData);
             }
-            else {
-              const index = this.todo.findIndex(item => item === )
-            }
+            // else {
+            //   const index = this.todo.findIndex(item => item === )
+            // }
             
             break;
           case 'inProgress':

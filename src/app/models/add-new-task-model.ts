@@ -4,4 +4,5 @@ export interface AddNewTaskModel {
     description: string;
     laneName: string;
     operation: string;
+    priority: string;
 }

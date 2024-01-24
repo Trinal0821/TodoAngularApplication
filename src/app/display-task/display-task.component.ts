@@ -39,7 +39,7 @@ export class DisplayTasksModal{
     if (this.form.valid) {
       let sendData : AddNewTaskModel = {taskTitle: this.form.get('taskTitle')?.value, 
       dueDate: new Date(2034, 22, 2), description: this.form.get('description')?.value,
-      laneName: this.data.laneName, operation: 'edit'
+      laneName: this.data.laneName, operation: 'edit', priority: 'High'
     }
 
       this.sendDataService.setData(sendData);

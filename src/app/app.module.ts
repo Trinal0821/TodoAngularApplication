@@ -20,6 +20,8 @@ import { ConfirmDeleteModal } from './delete-btn/delete-btn.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { DisplayComponent, DisplayTasksModal } from './display-task/display-task.component';
 import { LoginModal, SignupModal, LoginComponent, SignupComponent } from './account-setup/account-setup.component';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 
@@ -52,7 +54,8 @@ import { LoginModal, SignupModal, LoginComponent, SignupComponent } from './acco
     MatNativeDateModule,
     MatIconModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,15 +1,16 @@
 .todo-container, .in-progress-container, .done-container {
   background-color: #85a5af;
-   padding: 10px; 
+  padding: 10px;
   margin: 10px;
-  height: 800px; 
-  width: 500px; 
-  overflow: auto; /*Add overflow:auto to enable scrolling if content exceeds container size */
-  max-width: 100%;
+  min-height: 800px; /* Keep the desired height */
+  width: 500px;
+  /* Remove max-width property */
   margin: 0 25px 25px 0;
   display: inline-block;
   vertical-align: top;
+  /* Remove overflow property */
 }
+
 
 .navbar {
   background-color: #85a5af;
@@ -27,16 +28,6 @@
 }
 
 
-/* 
-/* Add some margin to the icons 
-.account-icon,
-.settings-icon {
-  margin: 0 8px;
-  color: white;
-  transform: scale(1.3);
-} */
-
-
 .title {
   font-size: 30px; /* Adjust the font size as needed */
   margin-right: 16px; /* Optional: Add some right margin for spacing */
@@ -47,28 +38,40 @@ h4 {
 }
 
 .todo-list, .in-progress-list, .done-list {
-    /* margin-left: 10px; */
-    border: solid 1px #ccc;
-    min-height: 60px;
-    background:#85a5af;
-    border-radius: 4px;
-    overflow: hidden;
-    display: block;
+  border: solid 1px #ccc;
+  min-height: 50px; /* Adjust the min-height as needed */
+  background: #85a5af;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex; /* Use flex display */
+  flex-direction: column; /* Set the flex direction to column */
 }
+
+
+.item-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color:white;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   
-  .item-box {
-    padding: 20px 10px;
-    border-bottom: solid 1px #ccc;
-    color:white;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    cursor: move;
-    background: #85a5af;
-    font-size: 14px;
-  }
+  cursor: move;
+  background: #85a5af;
+  font-size: 14px;
+  
+}
+
+.task-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chip-container {
+  margin-top: 8px; /* Adjust the margin based on your design */
+}
   
   .cdk-drag-preview {
     box-sizing: border-box;
