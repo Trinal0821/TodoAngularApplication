@@ -43,7 +43,7 @@ export class SendDataService {
           return actions.map(a => {
             const data = a.payload.doc.data() as AddNewTaskModel;
             const id = a.payload.doc.id;
-            return { id, ...data };
+            return {  ...data, id };
           });
         })
       );

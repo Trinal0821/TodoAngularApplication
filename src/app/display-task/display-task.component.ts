@@ -37,7 +37,7 @@ export class DisplayTasksModal{
 
   onSave() {
     if (this.form.valid) {
-      let sendData : AddNewTaskModel = {Task_Title: this.form.get('Task_Title')?.value, 
+      let sendData : AddNewTaskModel = {id: this.form.get('Id')?.value, Task_Title: this.form.get('Task_Title')?.value, 
       Due_Date: new Date(2034, 22, 2), Description: this.form.get('Description')?.value,
       Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: 'High'
     }

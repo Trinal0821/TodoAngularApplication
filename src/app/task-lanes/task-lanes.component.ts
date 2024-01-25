@@ -17,10 +17,10 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
   private addBtnDataSubscription: Subscription | undefined;
   private deleteBtnDataSubscription: Subscription | undefined;
   @ViewChild('display') displayTaskComponent !: DisplayComponent;
-  initialTasks : Observable<AddNewTaskModel[]> | undefined;
-  todo : AddNewTaskModel[] | undefined;
-  inProgress : AddNewTaskModel[] | undefined;
-   done : AddNewTaskModel[] | undefined;
+  initialTasks : Subscription | undefined;
+  todo : AddNewTaskModel[] = [];
+  inProgress : AddNewTaskModel[] = [];
+   done : AddNewTaskModel[] = [];
 
 
   //@ViewChild(AddTaskDirective) lane !: String;
@@ -67,9 +67,8 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
     }
    });
 
-   this.initialTasks = this.sendData.getTasks();
-   this.initialTasks.subscribe(task => {
-    this.todo = task.filter( item => item.Lane_Name == 'todo');
+   this.initialTasks = this.sendData.getTasks().subscribe(task => {
+    this.todo = task.filter( item => item.Lane_Name == 'todo' );
     this.inProgress = task.filter( item => item.Lane_Name == 'inProgress');
     this.done = task.filter( item => item.Lane_Name == 'done');
    })
@@ -84,56 +83,34 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
    if(this.deleteBtnDataSubscription) {
     this.deleteBtnDataSubscription.unsubscribe();
    }
+
  }
 
-  // drop(event: CdkDragDrop<string[]>): void {
-  //   if (event.previousContainer === event.container) {
-  //     // Reorder items in the same list
-  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-  //   } else {
-  //     // Move item to a different list
-  //     transferArrayItem(
-  //       event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex
-  //     );
-  //   }
-  // }
+ drop(event: CdkDragDrop<AddNewTaskModel[]>): void {
+  console.log('event container', event.container.data);
+  console.log('previous index', event.previousContainer.data.at(0)?.Lane_Name);
+  console.log('curr index', event.container);
 
-  drop(event: CdkDragDrop<AddNewTaskModel[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
-  }
-  
-  // Predicate function to determine if an item can enter a container
-  isInsideContainer(event: CdkDragDrop<AddNewTaskModel[]>, container: any): boolean {
-    const containerRect = container.element.nativeElement.getBoundingClientRect();
-    const itemRect = event.item.element.nativeElement.getBoundingClientRect();
 
-    // Check if the item is inside the container
-    return (
-      // itemRect.left <= containerRect.left &&
-      // itemRect.right <= containerRect.right &&
-      // itemRect.top <= containerRect.top &&
-      // itemRect.bottom <= containerRect.bottom
-      itemRect.left >= containerRect.left &&
-      itemRect.right <= containerRect.right &&
-      itemRect.top >= containerRect.top &&
-      itemRect.bottom <= containerRect.bottom
-    );
-  }
+   if (event.previousContainer === event.container) {
+     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+   } else {
+     transferArrayItem(
+       event.previousContainer.data,
+       event.container.data,
+       event.previousIndex,
+       event.currentIndex,
+     );
 
-   displayTaskDetail(model : AddNewTaskModel) {
-    this.displayTaskComponent.openDialog(model);
+     //Update the Firestore lanename 
+     const movedTask = event.container.data[event.currentIndex];
+      this.store.collection('Tasks').doc(movedTask.id).update({ Lane_Name: event.container.data.at(0)?.Lane_Name})
    }
+   
+}
+
+  displayTaskDetail(model : AddNewTaskModel) {
+     this.displayTaskComponent.openDialog(model);
+    }
 
 }
