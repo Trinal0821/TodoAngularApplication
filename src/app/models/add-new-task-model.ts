@@ -1,8 +1,9 @@
 export interface AddNewTaskModel {
-    taskTitle: string;
-    dueDate : Date;
-    description: string;
-    laneName: string;
-    operation: string;
-    priority: string;
+    //id: string;
+    Task_Title: string;
+    Due_Date : Date;
+    Description: string;
+    Lane_Name: string;
+    Operation: string;
+    Priority: string;
 }

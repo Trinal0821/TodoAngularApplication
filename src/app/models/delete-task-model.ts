@@ -1,4 +1,4 @@
 export interface DeleteTaskModel {
-    taskTitle: string;
-    laneName: string;
+    Task_Title: string;
+    Lane_Name: string;
 }

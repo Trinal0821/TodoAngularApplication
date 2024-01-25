@@ -12,17 +12,17 @@ import { DeleteTaskModel } from '../models/delete-task-model';
 })
 export class DeleteBtnComponent {
   @Input() taskLane : string | undefined;
-  @Input() taskTitle : string | undefined;
+  @Input() Task_Title : string | undefined;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private sendData : SendDataService) {}
 
   deleteDialog() {
-    console.log(this.taskTitle);
+    console.log(this.Task_Title);
     console.log(this.taskLane);
     this.dialog.open(ConfirmDeleteModal, {
       data: {
       taskLane: this.taskLane,
-      taskTitle: this.taskTitle
+      Task_Title: this.Task_Title
     }
     });
   }
@@ -37,7 +37,7 @@ export class ConfirmDeleteModal {
   constructor(private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data : any) {}
 
   deleteTask() {
-    let deleteTaskModel : DeleteTaskModel = {taskTitle: this.data.taskTitle, laneName: this.data.taskLane};
+    let deleteTaskModel : DeleteTaskModel = {Task_Title: this.data.Task_Title, Lane_Name: this.data.taskLane};
     this.sendDataService.setDeleteTaskTitle(deleteTaskModel);
   }
 }

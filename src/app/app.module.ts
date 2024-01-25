@@ -4,6 +4,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +24,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { DisplayComponent, DisplayTasksModal } from './display-task/display-task.component';
 import { LoginModal, SignupModal, LoginComponent, SignupComponent } from './account-setup/account-setup.component';
 import {MatChipsModule} from '@angular/material/chips';
+import { firebaseConfig } from './database/application-setup';
 
 
 
@@ -55,7 +59,9 @@ import {MatChipsModule} from '@angular/material/chips';
     MatIconModule,
     ReactiveFormsModule,
     FormsModule,
-    MatChipsModule
+    MatChipsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule
   ],
   providers: [],
   bootstrap: [AppComponent]

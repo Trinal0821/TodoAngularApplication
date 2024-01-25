@@ -1,9 +1,12 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { SendDataService } from '../send-data.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AddNewTaskModel } from '../models/add-new-task-model';
 import { DisplayComponent } from '../display-task/display-task.component';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-task-lanes',
@@ -14,40 +17,24 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
   private addBtnDataSubscription: Subscription | undefined;
   private deleteBtnDataSubscription: Subscription | undefined;
   @ViewChild('display') displayTaskComponent !: DisplayComponent;
+  initialTasks : Observable<AddNewTaskModel[]> | undefined;
+  todo : AddNewTaskModel[] | undefined;
+  inProgress : AddNewTaskModel[] | undefined;
+   done : AddNewTaskModel[] | undefined;
 
-
-  todo : AddNewTaskModel[]= [
-    {taskTitle: 'Get to work', dueDate: new Date(2034, 2, 2), description: 'Get to work early', laneName: 'todo', operation: '', priority: 'High'},
-    {taskTitle: 'Pick up groceries', dueDate: new Date(2034, 2, 2), description: 'and pick up dinner', laneName: 'todo', operation: '', priority: 'High'},
-    {taskTitle: 'Go home', dueDate: new Date(2034, 2, 2), description: '', laneName: 'todo', operation: '', priority: 'High'},
-    {taskTitle: 'Sleep', dueDate: new Date(2034, 2, 2), description: '', laneName: 'todo', operation: '', priority: 'High'},
-  ]
-
-  inProgress : AddNewTaskModel[]= [
-    {taskTitle: 'somethin1', dueDate: new Date(2034, 2, 2), description: '', laneName: 'inProgress', operation: '', priority: 'Medium'},
-    {taskTitle: 'something2', dueDate: new Date(2034, 2, 2), description: '', laneName: 'inProgress', operation: '', priority: 'Medium'},
-    {taskTitle: 'something3', dueDate: new Date(2034, 2, 2), description: '', laneName: 'inProgress', operation: '', priority: 'Medium'},
-  ]
-
-  done : AddNewTaskModel[]= [
-    {taskTitle: 'Get up', dueDate: new Date(2054, 2, 2), description: '123', laneName: 'done', operation: '', priority: 'Low'},
-    {taskTitle: 'Brush teeth', dueDate: new Date(2064, 2, 2), description: '4561', laneName: 'done', operation: '', priority: 'Low'},
-    {taskTitle: 'Take a shower', dueDate: new Date(2014, 2, 2), description: '', laneName: 'done', operation: '', priority: 'Low'},
-    {taskTitle: 'Check e-mail', dueDate: new Date(2013, 0, 2), description: '', laneName: 'done', operation: '', priority: 'Low'},
-    {taskTitle: 'Walk dog', dueDate: new Date(2024, 1, 1), description: 'Lorem Ipsum', laneName: 'done', operation: '', priority: 'Low'},
-  ]
 
   //@ViewChild(AddTaskDirective) lane !: String;
-  constructor(private sendData: SendDataService, private cdr: ChangeDetectorRef ) { }
+  constructor(private sendData: SendDataService, private store: AngularFirestore ) { }
+  
 
   ngOnInit() {
     // Subscribe to the observable in the service to detect changes
     this.addBtnDataSubscription = this.sendData.getDataObservable().subscribe(updatedData => {
       if(updatedData != null) {
-        switch(updatedData.laneName) {
+        switch(updatedData.Lane_Name) {
           case 'todo':
-            if(updatedData.operation === 'insert') {
-              this.todo.push(updatedData);
+            if(updatedData.Operation === 'insert') {
+              //this.todo.push(updatedData);
             }
             // else {
             //   const index = this.todo.findIndex(item => item === )
@@ -55,10 +42,10 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
             
             break;
           case 'inProgress':
-            this.inProgress.push(updatedData);
+            //this.inProgress.push(updatedData);
             break;
           case 'done':
-            this.done.push(updatedData);
+            //this.done.push(updatedData);
             break;
         }
       }
@@ -66,18 +53,25 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
 
    this.deleteBtnDataSubscription = this.sendData.getDeleteDataObservable().subscribe(data => {
     if(data != null) {
-      switch(data.laneName) {
+      switch(data.Lane_Name) {
         case 'todo':
-          this.todo = this.todo.filter(item => item.taskTitle !== data.taskTitle);
+          //this.todo = this.todo.filter(item => item.Task_Title !== data.Task_Title);
           break;
         case 'inProgress':
-          this.inProgress = this.inProgress.filter(item => item.taskTitle !== data.taskTitle);
+          //this.inProgress = this.inProgress.filter(item => item.Task_Title !== data.Task_Title);
           break;
         case 'done':
-          this.done = this.done.filter(item => item.taskTitle !== data.taskTitle);
+          //this.done = this.done.filter(item => item.Task_Title !== data.Task_Title);
           break;
       }
     }
+   });
+
+   this.initialTasks = this.sendData.getTasks();
+   this.initialTasks.subscribe(task => {
+    this.todo = task.filter( item => item.Lane_Name == 'todo');
+    this.inProgress = task.filter( item => item.Lane_Name == 'inProgress');
+    this.done = task.filter( item => item.Lane_Name == 'done');
    })
  }
 

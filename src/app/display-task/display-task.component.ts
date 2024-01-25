@@ -29,17 +29,17 @@ export class DisplayTasksModal{
 
   constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data:  AddNewTaskModel) {
      this.form = this.fb.group({
-       taskTitle: data.taskTitle,
-       dueDate: this.fb.control(data.dueDate),
-       description: data.description,
+       Task_Title: data.Task_Title,
+       Due_Date: this.fb.control(data.Due_Date),
+       Description: data.Description,
      });
   }
 
   onSave() {
     if (this.form.valid) {
-      let sendData : AddNewTaskModel = {taskTitle: this.form.get('taskTitle')?.value, 
-      dueDate: new Date(2034, 22, 2), description: this.form.get('description')?.value,
-      laneName: this.data.laneName, operation: 'edit', priority: 'High'
+      let sendData : AddNewTaskModel = {Task_Title: this.form.get('Task_Title')?.value, 
+      Due_Date: new Date(2034, 22, 2), Description: this.form.get('Description')?.value,
+      Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: 'High'
     }
 
       this.sendDataService.setData(sendData);

@@ -33,19 +33,19 @@ export class AddTasksModal{
 
   constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: string) {
     this.form = this.fb.group({
-      taskTitle: ['', Validators.required],
-      dueDate: [''],
-      description: [''],
+      Task_Title: ['', Validators.required],
+      Due_Date: [''],
+      Description: [''],
     });
   }
 
   onSave() {
     if (this.form.valid) {
-      let sendData : AddNewTaskModel = {taskTitle: this.form.get('taskTitle')?.value, 
-      dueDate: this.form.get('dueDate')?.value, description: this.form.get('description')?.value,
-      laneName: this.data, operation: 'insert', priority: 'High'}
+      let sendData : AddNewTaskModel = {Task_Title: this.form.get('Task_Title')?.value, 
+      Due_Date: this.form.get('Due_Date')?.value, Description: this.form.get('Description')?.value,
+      Lane_Name: this.data, Operation: 'insert', Priority: 'High'}
 
-      console.log(this.form.get('dueDate')?.value);
+      console.log(this.form.get('Due_Date')?.value);
 
       this.sendDataService.setData(sendData);
     }
