@@ -3,6 +3,8 @@ import {MatDialog, MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dia
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SendDataService } from '../send-data.service';
 import { AddNewTaskModel } from '../models/add-new-task-model';
+import { Timestamp } from '@firebase/firestore';
+import { timestamp } from 'rxjs';
 
 
 @Component({
@@ -28,9 +30,10 @@ export class DisplayTasksModal{
   form : FormGroup;
 
   constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data:  AddNewTaskModel) {
+    console.log(this.data.Due_Date.toDate);
      this.form = this.fb.group({
        Task_Title: data.Task_Title,
-       Due_Date: this.fb.control(data.Due_Date),
+       Due_Date: data.Due_Date.toDate,
        Description: data.Description,
      });
   }
@@ -38,7 +41,7 @@ export class DisplayTasksModal{
   onSave() {
     if (this.form.valid) {
       let sendData : AddNewTaskModel = {id: this.form.get('Id')?.value, Task_Title: this.form.get('Task_Title')?.value, 
-      Due_Date: new Date(2034, 22, 2), Description: this.form.get('Description')?.value,
+      Due_Date: Timestamp.fromDate(new Date(1, 1, 2)), Description: this.form.get('Description')?.value,
       Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: 'High'
     }
 

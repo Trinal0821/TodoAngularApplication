@@ -87,11 +87,6 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
  }
 
  drop(event: CdkDragDrop<AddNewTaskModel[]>): void {
-  console.log('event container', event.container.data);
-  console.log('previous index', event.previousContainer.data.at(0)?.Lane_Name);
-  console.log('curr index', event.container);
-
-
    if (event.previousContainer === event.container) {
      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
    } else {
