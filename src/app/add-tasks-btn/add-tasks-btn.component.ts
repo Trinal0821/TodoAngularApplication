@@ -3,6 +3,9 @@ import {MatDialog, MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dia
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SendDataService } from '../send-data.service';
 import { AddNewTaskModel } from '../models/add-new-task-model';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Timestamp } from '@firebase/firestore';
+
 
 //<button mat-button (click)="openDialog()">Open dialog</button>
 @Component({
@@ -11,7 +14,6 @@ import { AddNewTaskModel } from '../models/add-new-task-model';
               Add Task
               <i class="bi bi-plus-square h5"></i>
             </div>`,
- // imports: [MatButtonModule, MatDialogModule],
   styleUrl: './add-tasks-btn.component.css'
 })
 export class AddTasksBtnComponent {
@@ -31,23 +33,22 @@ export class AddTasksBtnComponent {
 export class AddTasksModal{
   form : FormGroup;
 
-  constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: string) {
+  constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: string, private store: AngularFirestore) {
     this.form = this.fb.group({
+      id: '',
       Task_Title: ['', Validators.required],
-      Due_Date: [''],
+      Due_Date: null,
       Description: [''],
     });
   }
 
   onSave() {
     if (this.form.valid) {
-      let sendData : AddNewTaskModel = {id: this.form.get('Id')?.value,Task_Title: this.form.get('Task_Title')?.value, 
-      Due_Date: this.form.get('Due_Date')?.value, Description: this.form.get('Description')?.value,
-      Lane_Name: this.data, Operation: 'insert', Priority: 'High'}
+      const task : AddNewTaskModel = {id: "", Task_Title: this.form.get('Task_Title')?.value, 
+      Due_Date: this.form.get('Due_Date') ? null : Timestamp.fromDate(this.form.get('Due_Date')?.value), Description: this.form.get('Description')?.value,
+      Lane_Name: this.data, Operation: 'insert', Priority: 'High'};
 
-      console.log(this.form.get('Due_Date')?.value);
-
-      this.sendDataService.setData(sendData);
+      this.store.collection("Tasks").add(task);
     }
   }
 }

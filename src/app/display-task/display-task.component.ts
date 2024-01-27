@@ -1,10 +1,10 @@
-import {Inject, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import {MatDialog, MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Inject, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SendDataService } from '../send-data.service';
 import { AddNewTaskModel } from '../models/add-new-task-model';
 import { Timestamp } from '@firebase/firestore';
-import { timestamp } from 'rxjs';
 
 
 @Component({
@@ -12,9 +12,9 @@ import { timestamp } from 'rxjs';
   template: "",
 })
 export class DisplayComponent {
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) { }
 
-  openDialog(model : AddNewTaskModel) {
+  openDialog(model: AddNewTaskModel) {
     this.dialog.open(DisplayTasksModal, {
       data: model
     });
@@ -26,26 +26,28 @@ export class DisplayComponent {
 @Component({
   templateUrl: './display-task.component.html',
 })
-export class DisplayTasksModal{
-  form : FormGroup;
+export class DisplayTasksModal {
+  form: FormGroup;
 
-  constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data:  AddNewTaskModel) {
-    console.log(this.data.Due_Date.toDate);
-     this.form = this.fb.group({
-       Task_Title: data.Task_Title,
-       Due_Date: data.Due_Date.toDate,
-       Description: data.Description,
-     });
+  constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: AddNewTaskModel, private store: AngularFirestore) {
+    console.log('data ' + data.Due_Date === undefined ? "NULL" : "DEPRESSION");
+    console.log(data.Due_Date);
+    this.form = this.fb.group({
+      id: data.id,
+      Task_Title: data.Task_Title ?? null,
+      Due_Date: data.Due_Date == null ? null : data.Due_Date.toDate(),
+      Description: data.Description,
+    });
   }
 
   onSave() {
     if (this.form.valid) {
-      let sendData : AddNewTaskModel = {id: this.form.get('Id')?.value, Task_Title: this.form.get('Task_Title')?.value, 
-      Due_Date: Timestamp.fromDate(new Date(1, 1, 2)), Description: this.form.get('Description')?.value,
-      Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: 'High'
+      this.store.collection('Tasks').doc(this.form.get('id')?.value).update({
+        Task_Title: this.form.get('Task_Title')?.value,
+        Due_Date: this.form.get('Due_Date') == null ? null : Timestamp.fromDate(this.form.get('Due_Date')?.value), Description: this.form.get('Description')?.value,
+        Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: 'High'
+      });
     }
-
-      this.sendDataService.setData(sendData);
-    }
- }
+  }
 }
+

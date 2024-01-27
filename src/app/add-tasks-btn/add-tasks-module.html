@@ -6,13 +6,13 @@
       <div class="col-md-6">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Title</mat-label>
-          <input matInput formControlName="taskTitle" placeholder="Task Title">
+          <input matInput formControlName="Task_Title" placeholder="Task Title">
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Due Date</mat-label>
-          <input matInput formControlName='dueDate' [matDatepicker]="picker">
+          <input matInput formControlName='Due_Date' [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -22,7 +22,7 @@
       <div class="col-md-12">
         <mat-form-field appearance="outline" [style.width.px]=530>
           <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description" placeholder="Enter a description" rows="5" style="width: 100%;"></textarea>
+          <textarea matInput formControlName="Description" placeholder="Enter a description" rows="5" style="width: 100%;"></textarea>
         </mat-form-field>
       </div>
     </div>

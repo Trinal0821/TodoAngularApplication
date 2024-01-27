@@ -23,7 +23,7 @@
             <div *ngIf="item.Task_Title != null" class="item-box">
               <div class="task-info">
                 {{ item.Task_Title }}
-                <app-delete-btn [taskLane]="'todo'" [Task_Title]=item.Task_Title></app-delete-btn>
+                <app-delete-btn class="trash" [taskLane]="'todo'" [id]=item.id (click)="$event.stopPropagation()"></app-delete-btn>
               </div>
               <div class="chip-container">
                 <mat-chip class="chip">
@@ -47,7 +47,7 @@
             <div *ngIf="item.Task_Title != null" class="item-box">
               <div class="task-info">
                 {{ item.Task_Title}}
-                <app-delete-btn [taskLane]="'inProgress'" [Task_Title]=item.Task_Title></app-delete-btn>
+                <app-delete-btn class="trash" [taskLane]="'inProgress'" [id]=item.id (click)="$event.stopPropagation()"></app-delete-btn>
               </div>
               <div class="chip-container">
                 <mat-chip class="chip">
@@ -71,7 +71,7 @@
             <div *ngIf="item.Task_Title != null" class="item-box">
               <div class="task-info">
                 {{ item.Task_Title }}
-                <app-delete-btn [taskLane]="'done'" [Task_Title]=item.Task_Title></app-delete-btn>
+                <app-delete-btn class="trash" [taskLane]="'done'" [id]=item.id (click)="$event.stopPropagation()"></app-delete-btn>
               </div>
               <div class="chip-container">
                 <mat-chip class="chip">

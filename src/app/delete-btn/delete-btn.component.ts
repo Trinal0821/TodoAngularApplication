@@ -4,6 +4,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SendDataService } from '../send-data.service';
 import { AddNewTaskModel } from '../models/add-new-task-model';
 import { DeleteTaskModel } from '../models/delete-task-model';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 
 @Component({
   selector: 'app-delete-btn',
@@ -12,17 +14,15 @@ import { DeleteTaskModel } from '../models/delete-task-model';
 })
 export class DeleteBtnComponent {
   @Input() taskLane : string | undefined;
-  @Input() Task_Title : string | undefined;
+  @Input() id : string | undefined;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private sendData : SendDataService) {}
 
   deleteDialog() {
-    console.log(this.Task_Title);
-    console.log(this.taskLane);
+    console.log(this.id);
     this.dialog.open(ConfirmDeleteModal, {
       data: {
-      taskLane: this.taskLane,
-      Task_Title: this.Task_Title
+      id: this.id
     }
     });
   }
@@ -34,10 +34,9 @@ export class DeleteBtnComponent {
 })
 export class ConfirmDeleteModal {
 
-  constructor(private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data : any) {}
+  constructor(private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data : any, private store: AngularFirestore) {}
 
   deleteTask() {
-    let deleteTaskModel : DeleteTaskModel = {Task_Title: this.data.Task_Title, Lane_Name: this.data.taskLane};
-    this.sendDataService.setDeleteTaskTitle(deleteTaskModel);
+    this.store.collection('Tasks').doc(this.data.id).delete();
   }
 }
