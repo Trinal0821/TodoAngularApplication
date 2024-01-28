@@ -51,22 +51,6 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
       }
    });
 
-  //  this.deleteBtnDataSubscription = this.sendData.getDeleteDataObservable().subscribe(data => {
-  //   if(data != null) {
-  //     switch(data.Lane_Name) {
-  //       case 'todo':
-  //         //this.todo = this.todo.filter(item => item.Task_Title !== data.Task_Title);
-  //         break;
-  //       case 'inProgress':
-  //         //this.inProgress = this.inProgress.filter(item => item.Task_Title !== data.Task_Title);
-  //         break;
-  //       case 'done':
-  //         //this.done = this.done.filter(item => item.Task_Title !== data.Task_Title);
-  //         break;
-  //     }
-  //   }
-  //  });
-
    this.initialTasks = this.sendData.getTasks().subscribe(task => {
     this.todo = task.filter( item => item.Lane_Name == 'todo' );
     this.inProgress = task.filter( item => item.Lane_Name == 'inProgress');

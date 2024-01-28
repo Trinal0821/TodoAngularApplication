@@ -1,0 +1,24 @@
+.navbar {
+    background-color: #85a5af;
+    margin-bottom: 20px;
+  }
+  
+  .toolbar-row {
+    justify-content: space-between;
+    color: white;
+  }
+  
+  .login {
+    display: flex;
+    gap: 16px; 
+  }
+  
+  .title {
+    font-size: 30px; /* Adjust the font size as needed */
+    margin-right: 16px; /* Optional: Add some right margin for spacing */
+  }
+
+  .icon{ 
+    color: white;
+    z-index: 1;
+  }

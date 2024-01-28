@@ -22,9 +22,10 @@ import { DeleteBtnComponent } from './delete-btn/delete-btn.component';
 import { ConfirmDeleteModal } from './delete-btn/delete-btn.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { DisplayComponent, DisplayTasksModal } from './display-task/display-task.component';
-import { LoginModal, SignupModal, LoginComponent, SignupComponent } from './account-setup/account-setup.component';
+import { LoginModal, SignupModal, LoginComponent, SignupComponent } from './login-signup/login-signup.component';
 import {MatChipsModule} from '@angular/material/chips';
 import { firebaseConfig } from './database/application-setup';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -43,6 +44,7 @@ import { firebaseConfig } from './database/application-setup';
    SignupModal,
     DisplayComponent,
     DisplayTasksModal,
+    NavbarComponent,
   ],
   imports: [
     MatToolbarModule,

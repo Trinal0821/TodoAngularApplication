@@ -5,6 +5,7 @@ import { DeleteTaskModel } from './models/delete-task-model';
 import { DisplayTasksModal } from './display-task/display-task.component';
 import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { UserDataModel } from './models/user-data-model';
 
 
 @Injectable({
@@ -17,8 +18,19 @@ export class SendDataService {
   deleteTaskTitle = new Subject<DeleteTaskModel>;
   public delete = this.deleteTaskTitle.asObservable();
 
+  userData = new Subject<UserDataModel>;
+  public user = this.userData.asObservable();
+
 
   constructor(private store: AngularFirestore) { }
+
+  setUserData(temp : UserDataModel) {
+    this.userData.next(temp);
+  }
+
+  getUserDataObservable() : Observable<UserDataModel> {
+    return this.userData;
+  }
 
   setData(temp: AddNewTaskModel) : void {
     this.data.next(temp);

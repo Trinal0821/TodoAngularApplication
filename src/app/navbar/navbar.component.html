@@ -1,0 +1,18 @@
+<mat-toolbar class="navbar">
+    <mat-toolbar-row class="toolbar-row">
+      <h2 class="title">TodoList</h2>
+      <div *ngIf="userData === undefined; else displayUserData">
+      <div class="login">
+        <app-login-btn></app-login-btn>
+        <app-signup-btn></app-signup-btn>
+      </div>
+    </div>
+      <!-- <mat-icon class="navbar-icons account-icon">account_circle</mat-icon> -->
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <ng-template #displayUserData>
+    <!-- Content to display when condition is false -->
+    <h4>Hello {{userData?.First_Name}}</h4>
+    <i class="fa-regular fa-circle-user icon"></i>
+  </ng-template>

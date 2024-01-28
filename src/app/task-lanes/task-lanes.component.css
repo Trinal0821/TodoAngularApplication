@@ -11,32 +11,6 @@
   /* Remove overflow property */
 }
 
-
-.navbar {
-  background-color: #85a5af;
-  margin-bottom: 20px;
-}
-
-.toolbar-row {
-  justify-content: space-between;
-  color: white;
-}
-
-.login {
-  display: flex;
-  gap: 16px; 
-}
-
-
-.title {
-  font-size: 30px; /* Adjust the font size as needed */
-  margin-right: 16px; /* Optional: Add some right margin for spacing */
-}
-
-h4 {
-    text-align: center;
-}
-
 .todo-list, .in-progress-list, .done-list {
   border: solid 1px #ccc;
   min-height: 50px; /* Adjust the min-height as needed */
@@ -56,7 +30,7 @@ h4 {
   flex-direction: column;
   align-items: stretch;
   
-  /* cursor: move; */
+   cursor: move; 
   background: #85a5af;
   font-size: 14px;
   
