@@ -21,31 +21,34 @@ export class DisplayComponent {
   }
 }
 
-
-
 @Component({
   templateUrl: './display-task.component.html',
 })
 export class DisplayTasksModal {
   form: FormGroup;
+  priorityList : String[] = [];
 
   constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: AddNewTaskModel, private store: AngularFirestore) {
-    console.log('data ' + data.Due_Date === undefined ? "NULL" : "DEPRESSION");
-    console.log(data.Due_Date);
     this.form = this.fb.group({
       id: data.id,
       Task_Title: data.Task_Title ?? null,
       Due_Date: data.Due_Date == null ? null : data.Due_Date.toDate(),
       Description: data.Description,
+      Priority : data.Priority,
     });
   }
+
+  ngOnInit() {
+     this.sendDataService.getPriority().subscribe(priority => { console.log('priority ' + priority);
+      this.priorityList = priority});
+ }
 
   onSave() {
     if (this.form.valid) {
       this.store.collection('Tasks').doc(this.form.get('id')?.value).update({
         Task_Title: this.form.get('Task_Title')?.value,
-        Due_Date: this.form.get('Due_Date') == null ? null : Timestamp.fromDate(this.form.get('Due_Date')?.value), Description: this.form.get('Description')?.value,
-        Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: 'High'
+        Due_Date: this.form.get('Due_Date')?.value !== null ? Timestamp.fromDate(this.form.get('Due_Date')?.value) : null, Description: this.form.get('Description')?.value,
+        Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: this.form.get('Priority')?.value
       });
     }
   }

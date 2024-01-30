@@ -48,6 +48,24 @@ export class SendDataService {
     return this.delete;
   }
 
+  getPriority(): Observable<String[]> {
+    return this.store.collection('Priority').snapshotChanges()
+      .pipe(
+        map(actions => {
+          const priorityArray: String[] = [];
+          actions.forEach(a => {
+            const data = a.payload.doc.data() as String
+            for (const key in data) {
+              if (Object.prototype.hasOwnProperty.call(data, key)) {
+                priorityArray.push(data[key]);
+              }
+            }
+          });
+          return priorityArray;
+        })
+      );
+  }
+
   getTasks(): Observable<AddNewTaskModel[]> {
     return this.store.collection('Tasks').snapshotChanges()
       .pipe(

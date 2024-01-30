@@ -1,18 +1,31 @@
 <mat-toolbar class="navbar">
-    <mat-toolbar-row class="toolbar-row">
-      <h2 class="title">TodoList</h2>
+  <mat-toolbar-row class="toolbar-row">
+    <h2 class="title">TodoList</h2>
+    <div class="login">
       <div *ngIf="userData === undefined; else displayUserData">
-      <div class="login">
-        <app-login-btn></app-login-btn>
-        <app-signup-btn></app-signup-btn>
+        <div class="login-signup">
+          <app-login-btn></app-login-btn>
+          <app-signup-btn></app-signup-btn>
+        </div>
       </div>
     </div>
-      <!-- <mat-icon class="navbar-icons account-icon">account_circle</mat-icon> -->
-    </mat-toolbar-row>
-  </mat-toolbar>
+    <!-- <mat-icon class="navbar-icons account-icon">account_circle</mat-icon> -->
+  </mat-toolbar-row>
+</mat-toolbar>
 
-  <ng-template #displayUserData>
-    <!-- Content to display when condition is false -->
-    <h4>Hello {{userData?.First_Name}}</h4>
-    <i class="fa-regular fa-circle-user icon"></i>
-  </ng-template>
+<ng-template #displayUserData>
+  <!-- Content to display when condition is false -->
+  <div class="user-data-container">
+    <p>Hello {{userData?.First_Name}}</p>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <i class="bi bi-person-circle"></i>
+    </button>
+    <mat-menu #menu="matMenu" yPosition="above">
+      <app-settings></app-settings>
+      <button mat-menu-item (click)="Logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</ng-template>

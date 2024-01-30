@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserDataModel } from '../models/user-data-model';
 import { SendDataService } from '../send-data.service';
 import { Observable, Subscription } from 'rxjs';
+import { SettingsComponent } from '../settings/settings.component';
+import { SettingsModel } from '../models/settings';
 
 @Component({
   selector: 'app-navbar',
@@ -12,8 +14,7 @@ import { Observable, Subscription } from 'rxjs';
 export class NavbarComponent {
   private userDataSubscription: Subscription | undefined;
   userData : UserDataModel | undefined;
-
-
+  
   constructor(private sendData: SendDataService, private store: AngularFirestore ) { }
 
   ngOnInit() {
@@ -31,4 +32,10 @@ export class NavbarComponent {
      this.userDataSubscription.unsubscribe();
    }
  }
+
+ Logout() {
+    this.userData = undefined;
+ }
+
+
 }

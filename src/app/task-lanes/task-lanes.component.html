@@ -16,7 +16,7 @@
                 {{ item.Task_Title }}
                 <app-delete-btn class="trash" [taskLane]="'todo'" [id]=item.id (click)="$event.stopPropagation()"></app-delete-btn>
               </div>
-              <div class="chip-container">
+              <div *ngIf="item.Priority != null" class="chip-container">
                 <mat-chip class="chip">
                   {{ item.Priority }}
                 </mat-chip>
@@ -40,7 +40,7 @@
                 {{ item.Task_Title}}
                 <app-delete-btn class="trash" [taskLane]="'inProgress'" [id]=item.id (click)="$event.stopPropagation()"></app-delete-btn>
               </div>
-              <div class="chip-container">
+              <div *ngIf="item.Priority != null" class="chip-container">
                 <mat-chip class="chip">
                   {{ item.Priority }}
                 </mat-chip>
@@ -64,7 +64,7 @@
                 {{ item.Task_Title }}
                 <app-delete-btn class="trash" [taskLane]="'done'" [id]=item.id (click)="$event.stopPropagation()"></app-delete-btn>
               </div>
-              <div class="chip-container">
+              <div *ngIf="item.Priority != null" class="chip-container">
                 <mat-chip class="chip">
                   {{ item.Priority }}
                 </mat-chip>

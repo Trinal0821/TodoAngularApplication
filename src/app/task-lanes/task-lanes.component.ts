@@ -6,7 +6,7 @@ import { AddNewTaskModel } from '../models/add-new-task-model';
 import { DisplayComponent } from '../display-task/display-task.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
-
+import { SettingsModel } from '../models/settings';
 
 @Component({
   selector: 'app-task-lanes',
@@ -17,6 +17,7 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
   private addBtnDataSubscription: Subscription | undefined;
   private deleteBtnDataSubscription: Subscription | undefined;
   @ViewChild('display') displayTaskComponent !: DisplayComponent;
+
   initialTasks : Subscription | undefined;
   todo : AddNewTaskModel[] = [];
   inProgress : AddNewTaskModel[] = [];
@@ -28,29 +29,6 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
   
 
   ngOnInit() {
-    // Subscribe to the observable in the service to detect changes
-    this.addBtnDataSubscription = this.sendData.getDataObservable().subscribe(updatedData => {
-      if(updatedData != null) {
-        switch(updatedData.Lane_Name) {
-          case 'todo':
-            if(updatedData.Operation === 'insert') {
-              //this.todo.push(updatedData);
-            }
-            // else {
-            //   const index = this.todo.findIndex(item => item === )
-            // }
-            
-            break;
-          case 'inProgress':
-            //this.inProgress.push(updatedData);
-            break;
-          case 'done':
-            //this.done.push(updatedData);
-            break;
-        }
-      }
-   });
-
    this.initialTasks = this.sendData.getTasks().subscribe(task => {
     this.todo = task.filter( item => item.Lane_Name == 'todo' );
     this.inProgress = task.filter( item => item.Lane_Name == 'inProgress');

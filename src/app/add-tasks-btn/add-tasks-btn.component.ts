@@ -32,6 +32,7 @@ export class AddTasksBtnComponent {
 })
 export class AddTasksModal{
   form : FormGroup;
+  priorityList : String[] = [];
 
   constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: string, private store: AngularFirestore) {
     this.form = this.fb.group({
@@ -39,14 +40,21 @@ export class AddTasksModal{
       Task_Title: ['', Validators.required],
       Due_Date: null,
       Description: [''],
+      Priority: null,
     });
   }
 
+  ngOnInit() {
+    this.sendDataService.getPriority().subscribe(priority => { console.log('priority ' + priority);
+     this.priorityList = priority});
+}
+
   onSave() {
     if (this.form.valid) {
+
       const task : AddNewTaskModel = {id: "", Task_Title: this.form.get('Task_Title')?.value, 
-      Due_Date: this.form.get('Due_Date') ? null : Timestamp.fromDate(this.form.get('Due_Date')?.value), Description: this.form.get('Description')?.value,
-      Lane_Name: this.data, Operation: 'insert', Priority: 'High'};
+      Due_Date: this.form.get('Due_Date')?.value !== null ? Timestamp.fromDate(this.form.get('Due_Date')?.value) : null, Description: this.form.get('Description')?.value,
+      Lane_Name: this.data, Operation: 'insert', Priority: this.form.get('Priority')?.value};
 
       this.store.collection("Tasks").add(task);
     }

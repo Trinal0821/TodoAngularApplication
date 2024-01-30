@@ -24,7 +24,7 @@ export class LoginComponent {
 
 @Component({
   selector: 'app-signup-btn',
-  template: `<div (click)="openSignupDialog()">Sign Up</div>`,
+  template: `<div (click)="openSignupDialog()">Signup</div>`,
 })
 export class SignupComponent {
   constructor(public dialog: MatDialog, private fb: FormBuilder, private sendData: SendDataService, private store: AngularFirestore) { }
@@ -44,22 +44,25 @@ export class SignupModal {
 
   constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: string, private store: AngularFirestore) {
     this.form = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      userName: ['', Validators.required],
-      password: ['', Validators.required],
+      First_Name: ['', Validators.required],
+      Last_Name: ['', Validators.required],
+      User_Name: ['', Validators.required],
+      Password: ['', Validators.required],
     });
   }
 
-  // onSave() {
-  //   if (this.form.valid) {
-  //     let sendData : AddNewTaskModel = {taskTitle: this.form.get('taskTitle')?.value, 
-  //     dueDate: new Date(2034, 22, 2), description: this.form.get('description')?.value,
-  //     laneName: this.data}
-
-  //     this.sendDataService.setData(sendData);
-  //   }
-  // }
+  onSignup() {
+    if (this.form.valid) {
+      const userData: UserDataModel = {
+        id: "", User_Name: this.form.get('User_Name')?.value,
+        Password: this.form.get('Password')?.value,
+        First_Name: this.form.get('First_Name')?.value,
+        Last_Name: this.form.get('Last_Name')?.value
+      }
+      this.store.collection('Users_Info').add(userData);
+      this.sendDataService.setUserData(userData);
+    }
+  }
 }
 
 @Component({
@@ -68,7 +71,6 @@ export class SignupModal {
 export class LoginModal {
   form: FormGroup;
   hide = true;
-  @Output() userData : EventEmitter<UserDataModel> = new EventEmitter<UserDataModel>();
 
   constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: string, private store: AngularFirestore) {
     this.form = this.fb.group({
@@ -90,11 +92,7 @@ export class LoginModal {
             console.log(data);
 
             if (data.Password === this.form.get('Password')?.value) {
-              console.log("yaya you're logged in");
               this.sendDataService.setUserData(data);
-            }
-            else {
-              console.log('nooooooooo');
             }
           });
         });

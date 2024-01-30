@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +27,10 @@ import { LoginModal, SignupModal, LoginComponent, SignupComponent } from './logi
 import {MatChipsModule} from '@angular/material/chips';
 import { firebaseConfig } from './database/application-setup';
 import { NavbarComponent } from './navbar/navbar.component';
+import {MatSelectModule} from '@angular/material/select';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsModal } from './settings/settings.component';
 
 
 
@@ -45,6 +50,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     DisplayComponent,
     DisplayTasksModal,
     NavbarComponent,
+    SettingsComponent,
+    SettingsModal,
   ],
   imports: [
     MatToolbarModule,
@@ -63,7 +70,10 @@ import { NavbarComponent } from './navbar/navbar.component';
     FormsModule,
     MatChipsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireModule
+    AngularFireModule,
+    MatMenuModule,
+    MatSelectModule,
+    ColorPickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
