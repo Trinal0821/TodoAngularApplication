@@ -30,19 +30,23 @@ export class SendDataService {
   constructor(private store: AngularFirestore) { }
 
   redisplayLoginTask() {
+    console.log('the redisplay login task is getting called');
     this.updateTask.next();
   }
 
   setUserDocId(temp : string) {
-    this.userDocId = temp;
+      this.userDocId = temp;
   }
 
   getUserDocId() {
-    return this.userDocId;
+      return this.userDocId;
   }
 
-  setUserData(temp : UserDataModel) {
-    this.userData.next(temp);
+  setUserData(temp : UserDataModel | null) {
+    if(temp != null) {
+      this.userData.next(temp);
+
+    }
   }
 
   getUserDataObservable() : Observable<UserDataModel> {
@@ -86,7 +90,7 @@ export class SendDataService {
   getTasks(id : string): Observable<AddNewTaskModel[]> {
     console.log('user id' + this.userDocId);
     if(id != "") {
-      return this.store.collection('Users_Info').doc(this.userDocId).collection('Tasks').snapshotChanges()
+      return this.store.collection('Users_Info').doc(this.userDocId ?? "").collection('Tasks').snapshotChanges()
       .pipe(
         map(actions => {
           return actions.map(a => {

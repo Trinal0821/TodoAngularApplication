@@ -1,11 +1,10 @@
-import { Inject, Component, Input, EventEmitter, Output, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Inject, Component } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SendDataService } from '../send-data.service';
 import { AddNewTaskModel } from '../models/add-new-task-model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserDataModel } from '../models/user-data-model';
-import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -68,7 +67,6 @@ export class SignupModal {
           const docId = ref.id;
           this.sendDataService.setUserDocId(docId);
           this.sendDataService.setUserData(userData);
-          console.log('user doc id ' + docId);
 
           // Retrieve tasks from 'Tasks' collection
           this.store.collection('Tasks').snapshotChanges().subscribe(actions => {

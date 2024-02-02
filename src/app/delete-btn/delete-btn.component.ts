@@ -37,6 +37,11 @@ export class ConfirmDeleteModal {
   constructor(private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data : any, private store: AngularFirestore) {}
 
   deleteTask() {
-    this.store.collection('Tasks').doc(this.data.id).delete();
+    if(this.sendDataService.getUserDocId() != "") {
+        this.store.collection('Users_Info').doc(this.sendDataService.getUserDocId()).collection('Tasks').doc(this.data.id).delete();
+    }
+    else {
+      this.store.collection('Tasks').doc(this.data.id).delete();
+    }
   }
 }

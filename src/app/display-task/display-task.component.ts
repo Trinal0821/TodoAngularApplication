@@ -45,11 +45,22 @@ export class DisplayTasksModal {
 
   onSave() {
     if (this.form.valid) {
-      this.store.collection('Tasks').doc(this.form.get('id')?.value).update({
-        Task_Title: this.form.get('Task_Title')?.value,
-        Due_Date: this.form.get('Due_Date')?.value !== null ? Timestamp.fromDate(this.form.get('Due_Date')?.value) : null, Description: this.form.get('Description')?.value,
-        Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: this.form.get('Priority')?.value
-      });
+      if(this.sendDataService.getUserDocId() != "") {
+        this.store.collection('Users_Info').doc(this.sendDataService.getUserDocId()).collection('Tasks').doc(this.form.get('id')?.value).update({
+          Task_Title: this.form.get('Task_Title')?.value,
+          Due_Date: this.form.get('Due_Date')?.value !== null ? Timestamp.fromDate(this.form.get('Due_Date')?.value) : null, Description: this.form.get('Description')?.value,
+          Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: this.form.get('Priority')?.value
+        });
+      }
+      else {
+        this.store.collection('Tasks').doc(this.form.get('id')?.value).update({
+          Task_Title: this.form.get('Task_Title')?.value,
+          Due_Date: this.form.get('Due_Date')?.value !== null ? Timestamp.fromDate(this.form.get('Due_Date')?.value) : null, Description: this.form.get('Description')?.value,
+          Lane_Name: this.data.Lane_Name, Operation: 'edit', Priority: this.form.get('Priority')?.value
+        });
+      }
+
+      
     }
   }
 }

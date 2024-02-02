@@ -13,7 +13,7 @@ import { SettingsModel } from '../models/settings';
 })
 export class NavbarComponent {
   private userDataSubscription: Subscription | undefined;
-  userData : UserDataModel | undefined;
+  userData : UserDataModel | null = null;
   @ViewChild('settings') settingComponent !: SettingsComponent;
 
   constructor(private sendData: SendDataService, private store: AngularFirestore ) { }
@@ -35,11 +35,18 @@ export class NavbarComponent {
  }
 
  Logout() {
-    this.userData = undefined;
+  console.log('logout getting clicked');
+    this.userData = null;
+    this.sendData.setUserData(null);
+    this.sendData.setUserDocId("");
+    this.sendData.redisplayLoginTask();
+
  }
 
  displaySettings() {
   console.log('displaysettings getting called')
-  this.settingComponent.openDialog(this.userData);
+  if(this.userData != null) {
+    this.settingComponent.openDialog(this.userData);
+  }
 }
 }

@@ -3,7 +3,7 @@
   <mat-toolbar-row class="toolbar-row">
     <h2 class="title">TodoList</h2>
     <div class="login">
-      <div *ngIf="userData === undefined; else displayUserData">
+      <div *ngIf="userData === null; else displayUserData">
         <div class="login-signup">
           <app-login-btn></app-login-btn>
           <app-signup-btn></app-signup-btn>

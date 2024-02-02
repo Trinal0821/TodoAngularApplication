@@ -19,6 +19,7 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
   @ViewChild('display') displayTaskComponent !: DisplayComponent;
 
   initialTasks : Subscription | undefined;
+  signedInTasks : Subscription | undefined;
   todo : AddNewTaskModel[] = [];
   inProgress : AddNewTaskModel[] = [];
    done : AddNewTaskModel[] = [];
@@ -35,8 +36,10 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
     this.done = task.filter( item => item.Lane_Name == 'done');
    })
 
-   this.sendData.updateT.subscribe(() => {
+   this.signedInTasks = this.sendData.updateT.subscribe(() => {
+    console.log('userdocid in the task-lanes ' + this.sendData.getUserDocId());
     this.sendData.getTasks(this.sendData.getUserDocId()).subscribe(task => {
+
       console.log("login getting triggered");
       console.log(task);
       this.todo = task.filter( item => item.Lane_Name == 'todo' );
@@ -55,6 +58,10 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
 
    if(this.deleteBtnDataSubscription) {
     this.deleteBtnDataSubscription.unsubscribe();
+   }
+
+   if (this.signedInTasks) {
+     this.signedInTasks.unsubscribe();
    }
 
  }
