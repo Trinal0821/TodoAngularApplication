@@ -29,11 +29,22 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
   
 
   ngOnInit() {
-   this.initialTasks = this.sendData.getTasks().subscribe(task => {
+   this.initialTasks = this.sendData.getTasks("").subscribe(task => {
     this.todo = task.filter( item => item.Lane_Name == 'todo' );
     this.inProgress = task.filter( item => item.Lane_Name == 'inProgress');
     this.done = task.filter( item => item.Lane_Name == 'done');
    })
+
+   this.sendData.updateT.subscribe(() => {
+    this.sendData.getTasks(this.sendData.getUserDocId()).subscribe(task => {
+      console.log("login getting triggered");
+      console.log(task);
+      this.todo = task.filter( item => item.Lane_Name == 'todo' );
+      this.inProgress = task.filter( item => item.Lane_Name == 'inProgress');
+      this.done = task.filter( item => item.Lane_Name == 'done');
+  })
+});
+
  }
 
  ngOnDestroy() {
@@ -61,7 +72,12 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
 
      //Update the Firestore lanename 
      const movedTask = event.container.data[event.currentIndex];
+     if(this.sendData.getUserDocId() != "") {
+      this.store.collection('Users_Info').doc(this.sendData.getUserDocId()).collection('Tasks').doc(movedTask.id).update({ Lane_Name: event.container.data.at(0)?.Lane_Name})
+     }
+     else {
       this.store.collection('Tasks').doc(movedTask.id).update({ Lane_Name: event.container.data.at(0)?.Lane_Name})
+     }
    }
    
 }

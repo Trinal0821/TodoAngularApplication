@@ -21,8 +21,25 @@ export class SendDataService {
   userData = new Subject<UserDataModel>;
   public user = this.userData.asObservable();
 
+  userDocId : string = "";
+
+  updateTask = new Subject<void>;
+  updateT = this.updateTask.asObservable();
+
 
   constructor(private store: AngularFirestore) { }
+
+  redisplayLoginTask() {
+    this.updateTask.next();
+  }
+
+  setUserDocId(temp : string) {
+    this.userDocId = temp;
+  }
+
+  getUserDocId() {
+    return this.userDocId;
+  }
 
   setUserData(temp : UserDataModel) {
     this.userData.next(temp);
@@ -66,8 +83,10 @@ export class SendDataService {
       );
   }
 
-  getTasks(): Observable<AddNewTaskModel[]> {
-    return this.store.collection('Tasks').snapshotChanges()
+  getTasks(id : string): Observable<AddNewTaskModel[]> {
+    console.log('user id' + this.userDocId);
+    if(id != "") {
+      return this.store.collection('Users_Info').doc(this.userDocId).collection('Tasks').snapshotChanges()
       .pipe(
         map(actions => {
           return actions.map(a => {
@@ -77,6 +96,20 @@ export class SendDataService {
           });
         })
       );
+    }
+    else {
+      return this.store.collection('Tasks').snapshotChanges()
+      .pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data = a.payload.doc.data() as AddNewTaskModel;
+            const id = a.payload.doc.id;
+            return {  ...data, id };
+          });
+        })
+      );
+    }
+    
   }
 
 }

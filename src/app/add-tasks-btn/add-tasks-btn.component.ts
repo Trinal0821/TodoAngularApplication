@@ -56,7 +56,12 @@ export class AddTasksModal{
       Due_Date: this.form.get('Due_Date')?.value !== null ? Timestamp.fromDate(this.form.get('Due_Date')?.value) : null, Description: this.form.get('Description')?.value,
       Lane_Name: this.data, Operation: 'insert', Priority: this.form.get('Priority')?.value};
 
-      this.store.collection("Tasks").add(task);
+      if(this.sendDataService.getUserDocId() != "") {
+        this.store.collection('User_Info').doc(this.sendDataService.getUserDocId()).collection("Tasks").add(task);
+      }
+      else {
+        this.store.collection("Tasks").add(task);
+      }
     }
   }
 }

@@ -14,7 +14,8 @@ import { SettingsModel } from '../models/settings';
 export class NavbarComponent {
   private userDataSubscription: Subscription | undefined;
   userData : UserDataModel | undefined;
-  
+  @ViewChild('settings') settingComponent !: SettingsComponent;
+
   constructor(private sendData: SendDataService, private store: AngularFirestore ) { }
 
   ngOnInit() {
@@ -37,5 +38,8 @@ export class NavbarComponent {
     this.userData = undefined;
  }
 
-
+ displaySettings() {
+  console.log('displaysettings getting called')
+  this.settingComponent.openDialog(this.userData);
+}
 }

@@ -5,6 +5,7 @@ import { SendDataService } from '../send-data.service';
 import { AddNewTaskModel } from '../models/add-new-task-model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserDataModel } from '../models/user-data-model';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -53,14 +54,32 @@ export class SignupModal {
 
   onSignup() {
     if (this.form.valid) {
-      const userData: UserDataModel = {
-        id: "", User_Name: this.form.get('User_Name')?.value,
+      const userData : UserDataModel = {
+        id: "",
+        User_Name: this.form.get('User_Name')?.value,
         Password: this.form.get('Password')?.value,
         First_Name: this.form.get('First_Name')?.value,
         Last_Name: this.form.get('Last_Name')?.value
-      }
-      this.store.collection('Users_Info').add(userData);
-      this.sendDataService.setUserData(userData);
+      };
+      
+      // Add user data to 'Users_Info' collection
+      this.store.collection('Users_Info').add(userData)
+        .then((ref) => {
+          const docId = ref.id;
+          this.sendDataService.setUserDocId(docId);
+          this.sendDataService.setUserData(userData);
+          console.log('user doc id ' + docId);
+
+          // Retrieve tasks from 'Tasks' collection
+          this.store.collection('Tasks').snapshotChanges().subscribe(actions => {
+            actions.forEach(a => {
+              const data = a.payload.doc.data() as AddNewTaskModel;
+      
+              // Add task to the user's subcollection
+              this.store.collection('Users_Info').doc(docId).collection('Tasks').add(data);
+            });
+          });
+        });
     }
   }
 }
@@ -85,14 +104,13 @@ export class LoginModal {
       this.store.collection<UserDataModel>('Users_Info', ref => ref.where('User_Name', '==', this.form.get('User_Name')?.value))
         .get()
         .subscribe(snapshot => {
-          snapshot.forEach(doc => {
+          snapshot.forEach(doc => { 
             const data = doc.data();
-            // Here, you have the user data and document ID
-            // You can proceed with authentication logic
-            console.log(data);
 
             if (data.Password === this.form.get('Password')?.value) {
               this.sendDataService.setUserData(data);
+              this.sendDataService.setUserDocId(doc.id);
+              this.sendDataService.redisplayLoginTask();
             }
           });
         });
