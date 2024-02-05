@@ -23,7 +23,7 @@
               </div>
             </div>
           </div>
-          <app-add-tasks-btn [taskLane]="'todo'" class="item-box"></app-add-tasks-btn>
+          <app-add-tasks-btn [taskLane]="'todo'" [arraySize]="todo.length" class="item-box"></app-add-tasks-btn>
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@
               </div>
             </div>
           </div>
-          <app-add-tasks-btn [taskLane]="'inProgress'" class="item-box"></app-add-tasks-btn>
+          <app-add-tasks-btn [taskLane]="'inProgress'" [arraySize]="inProgress.length" class="item-box"></app-add-tasks-btn>
         </div>
       </div>
     </div>
@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          <app-add-tasks-btn [taskLane]="'done'" class="item-box"></app-add-tasks-btn>
+          <app-add-tasks-btn [taskLane]="'done'" [arraySize]="done.length" class="item-box"></app-add-tasks-btn>
         </div>
       </div>
     </div>

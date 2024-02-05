@@ -17,12 +17,13 @@ import { Timestamp } from '@firebase/firestore';
   styleUrl: './add-tasks-btn.component.css'
 })
 export class AddTasksBtnComponent {
+  @Input() arraySize: number | undefined;
   @Input() taskLane: string | undefined;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private sendData : SendDataService) {}
 
   openDialog() {
     this.dialog.open(AddTasksModal, {
-      data: this.taskLane
+      data: { taskLane: this.taskLane, arraySize: this.arraySize } 
     });
   }
 }
@@ -34,7 +35,7 @@ export class AddTasksModal{
   form : FormGroup;
   priorityList : String[] = [];
 
-  constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: string, private store: AngularFirestore) {
+  constructor(private fb: FormBuilder, private sendDataService: SendDataService, @Inject(MAT_DIALOG_DATA) public data: any, private store: AngularFirestore) {
     this.form = this.fb.group({
       id: '',
       Task_Title: ['', Validators.required],
@@ -45,20 +46,20 @@ export class AddTasksModal{
   }
 
   ngOnInit() {
-    this.sendDataService.getPriority().subscribe(priority => { console.log('priority ' + priority);
+    this.sendDataService.getPriority().subscribe(priority => { 
      this.priorityList = priority});
 }
 
   onSave() {
     if (this.form.valid) {
-
       const task : AddNewTaskModel = {id: "", Task_Title: this.form.get('Task_Title')?.value, 
       Due_Date: this.form.get('Due_Date')?.value !== null ? Timestamp.fromDate(this.form.get('Due_Date')?.value) : null, Description: this.form.get('Description')?.value,
-      Lane_Name: this.data, Operation: 'insert', Priority: this.form.get('Priority')?.value};
+      Lane_Name: this.data.taskLane, Operation: 'insert', Priority: this.form.get('Priority')?.value, Index : this.data.arraySize};
 
       console.log(task);
       console.log(this.sendDataService.getUserDocId());
       if(this.sendDataService.getUserDocId() != "") {
+
         console.log('getting ready to insert');
         this.store.collection('Users_Info').doc(this.sendDataService.getUserDocId()).collection("Tasks").add(task);
       }

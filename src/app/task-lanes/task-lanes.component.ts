@@ -31,9 +31,9 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
    this.initialTasks = this.sendData.getTasks("").subscribe(task => {
-    this.todo = task.filter( item => item.Lane_Name == 'todo' );
-    this.inProgress = task.filter( item => item.Lane_Name == 'inProgress');
-    this.done = task.filter( item => item.Lane_Name == 'done');
+    this.todo = task.filter( item => item.Lane_Name == 'todo' ).sort((a, b) => a.Index - b.Index);
+    this.inProgress = task.filter( item => item.Lane_Name == 'inProgress').sort((a, b) => a.Index - b.Index);
+    this.done = task.filter( item => item.Lane_Name == 'done').sort((a, b) => a.Index - b.Index);
    })
 
    this.signedInTasks = this.sendData.updateT.subscribe(() => {
@@ -78,12 +78,14 @@ export class TaskLanesComponent implements OnInit, OnDestroy{
      );
 
      //Update the Firestore lanename 
+     //Should I really update the index? Does the index really matter in todo list like this?
      const movedTask = event.container.data[event.currentIndex];
+     const index = event.container.data.findIndex(tasks => tasks.id?.includes('Dummy'));
      if(this.sendData.getUserDocId() != "") {
-      this.store.collection('Users_Info').doc(this.sendData.getUserDocId()).collection('Tasks').doc(movedTask.id).update({ Lane_Name: event.container.data.at(0)?.Lane_Name})
+      this.store.collection('Users_Info').doc(this.sendData.getUserDocId()).collection('Tasks').doc(movedTask.id).update({ Lane_Name: event.container.data.at(0)?.Lane_Name, Index: event.currentIndex})
      }
      else {
-      this.store.collection('Tasks').doc(movedTask.id).update({ Lane_Name: event.container.data.at(0)?.Lane_Name})
+      this.store.collection('Tasks').doc(movedTask.id).update({ Lane_Name: event.container.data.at(index)?.Lane_Name, Index: event.currentIndex })
      }
    }
    
